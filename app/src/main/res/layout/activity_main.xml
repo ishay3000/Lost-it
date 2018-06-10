@@ -9,6 +9,10 @@
     app:layout_insetEdge="bottom"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -23,24 +27,24 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
+                android:textAlignment="center"
+                android:textDirection="anyRtl"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:textDirection="anyRtl"
-                android:textAlignment="center"
                 app:title="Lost it!">
 
                 <ImageView
-                    android:src="@drawable/ic_lost_found"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_lost_found" />
 
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
-                app:tabIndicatorColor="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@android:color/white">
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem"
@@ -68,10 +72,11 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="?attr/actionBarSize"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--<android.support.design.widget.BottomNavigationView-->
+        <!--<android.support.design.widget.BottomNavigationView-->
         <!--android:id="@+id/bottom_navigation"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -80,95 +85,118 @@
         <!--android:background="@color/colorPrimaryDark"-->
         <!--/>-->
 
-<LinearLayout
-    android:id="@+id/ln_fab"
-    android:orientation="vertical"
-    android:layout_gravity="end|bottom"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/right_labels"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        app:fab_addButtonColorNormal="@color/colorAccent"
-        app:fab_addButtonColorPressed="@color/white_pressed"
-        app:fab_addButtonPlusIconColor="@color/white"
-        app:fab_addButtonSize="normal"
-        app:fab_labelStyle="@style/menu_labels_style"
-        app:fab_labelsPosition="left">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            app:fab_icon="@drawable/ic_lost_found"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_title="New Lost"
-            app:fab_size="mini"
-            app:fab_colorPressed="@color/white_pressed"/>
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            app:fab_icon="@drawable/ic_lost_found"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_size="mini"
-            app:fab_title="New Found"
-            app:fab_colorPressed="@color/white_pressed"/>
+            <LinearLayout
+                android:id="@+id/ln_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end|bottom"
+                android:orientation="vertical">
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+                <com.getbase.floatingactionbutton.FloatingActionsMenu
+                    android:id="@+id/right_labels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginStart="16dp"
+                    app:fab_addButtonColorNormal="@color/colorAccent"
+                    app:fab_addButtonColorPressed="@color/white_pressed"
+                    app:fab_addButtonPlusIconColor="@color/white"
+                    app:fab_addButtonSize="normal"
+                    app:fab_labelStyle="@style/menu_labels_style"
+                    app:fab_labelsPosition="left">
 
-</LinearLayout>
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fab_colorNormal="@color/white"
+                        app:fab_colorPressed="@color/white_pressed"
+                        app:fab_icon="@drawable/ic_lost_found"
+                        app:fab_size="mini"
+                        app:fab_title="New Lost" />
+
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fab_colorNormal="@color/white"
+                        app:fab_colorPressed="@color/white_pressed"
+                        app:fab_icon="@drawable/ic_lost_found"
+                        app:fab_size="mini"
+                        app:fab_title="New Found" />
+
+                </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+            </LinearLayout>
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"
+                app:menu="@menu/bottom_navigation_menu" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
     <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="end|bottom"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:orientation="vertical"-->
+    <!--&gt;-->
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end|bottom"-->
-            <!--android:orientation="horizontal">-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:orientation="horizontal">-->
 
-            <!--<TextView-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:textSize="25sp"-->
-                <!--android:textColor="#ffffff"-->
-                <!--android:background="#000000"-->
-                <!--android:text="New Found"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
+    <!--<TextView-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:textSize="25sp"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:background="#000000"-->
+    <!--android:text="New Found"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
 
-            <!--<android.support.design.widget.FloatingActionButton-->
-                <!--android:layout_margin="@dimen/fab_margin"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-        <!--</LinearLayout>-->
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:id="@+id/fab"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end|bottom"-->
-            <!--android:layout_margin="@dimen/fab_margin"-->
-            <!--app:srcCompat="@android:drawable/ic_input_add" />-->
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
 
     <!--</LinearLayout>-->
 
     <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="end|bottom"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_input_add" />-->
+    <!--android:id="@+id/fab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--app:srcCompat="@android:drawable/ic_input_add" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/fab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--app:srcCompat="@android:drawable/ic_input_add" />-->
 
 </android.support.design.widget.CoordinatorLayout>
