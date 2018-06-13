@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ishaycena.tabfragments.MainActivity">
     <item
+        android:id="@+id/menu_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:orderInCategory="100"
         android:title="Home"
         app:showAsAction="never" />
     <item
+        android:id="@+id/menu_categories"
         android:icon="@drawable/ic_menu_categories"
         android:orderInCategory="100"
         android:title="Categories"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_profile"
         android:icon="@drawable/ic_menu_profile"
         android:orderInCategory="100"
         android:title="Profile"
