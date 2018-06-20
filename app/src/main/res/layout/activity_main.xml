@@ -31,6 +31,7 @@
                 android:textDirection="anyRtl"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@android:color/black"
                 app:title="Lost it!">
 
                 <ImageView
@@ -44,7 +45,8 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@android:color/white">
+                app:tabTextColor="@android:color/black"
+                app:tabIndicatorColor="@android:color/holo_blue_light">
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem"
@@ -116,6 +118,7 @@
                     app:fab_labelsPosition="left">
 
                     <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_lost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:fab_colorNormal="@color/white"
@@ -125,6 +128,7 @@
                         app:fab_title="New Lost" />
 
                     <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_found"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:fab_colorNormal="@color/white"
@@ -144,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
-                android:background="@color/colorPrimaryDark"
+                android:background="#deded7"
                 app:menu="@menu/bottom_navigation_menu" />
 
         </LinearLayout>

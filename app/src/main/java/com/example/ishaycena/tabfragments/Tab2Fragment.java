@@ -1,10 +1,13 @@
 package com.example.ishaycena.tabfragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +18,12 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ishaycena.tabfragments.Utilities.Found;
@@ -115,6 +121,59 @@ public class Tab2Fragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+//                Toast.makeText(getActivity(), "onScrolledStateChanged called", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onScrollStateChanged: called");
+            }
+
+            public void slideUp(View view){
+                view.setVisibility(View.VISIBLE);
+                TranslateAnimation animate = new TranslateAnimation(
+                        0,                 // fromXDelta
+                        0,                 // toXDelta
+                        view.getHeight(),  // fromYDelta
+                        0);                // toYDelta
+                animate.setDuration(100);
+                animate.setFillAfter(true);
+                view.startAnimation(animate);
+            }
+
+            // slide the view from its current position to below itself
+            public void slideDown(View view){
+                TranslateAnimation animate = new TranslateAnimation(
+                        0,                 // fromXDelta
+                        0,                 // toXDelta
+                        0,                 // fromYDelta
+                        view.getHeight()); // toYDelta
+                animate.setDuration(100);
+                animate.setFillAfter(true);
+                view.startAnimation(animate);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+//                Toast.makeText(getActivity(), "onScrolled called", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onScrolled: called");
+
+                if (dy > 0 && bottomNavigationView.isShown()) {
+//                    bottomNavigationView.setVisibility(View.GONE);
+                    slideDown(bottomNavigationView);
+                } else if (dy < 0 ) {
+//                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    slideUp(bottomNavigationView);
+                }
+            }
+            
+        });
     }
 }
 
