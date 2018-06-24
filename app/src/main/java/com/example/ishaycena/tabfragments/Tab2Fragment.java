@@ -1,13 +1,11 @@
 package com.example.ishaycena.tabfragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,25 +13,57 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.Utilities.BackgroundWorker;
 import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Tab2Fragment extends Fragment {
+public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFetchedListener {
     private static final String TAG = "Tab2Fragment";
     View view;
+
+    @Override
+    public void onDataFetched(final List<Found> founds) {
+//        adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
+
+        Bitmap profile = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ishay_1);
+        Bitmap badge = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_crown);
+        Bitmap map = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_map);
+        Bitmap item = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_passport);
+
+        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
+        final Found found2 = new Found(profile, badge, item, map, name, description);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                int size = adapter.lstFounds.size();
+
+                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
+                adapter.notifyItemRemoved(size - 1);
+                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
+                for (Found found :
+                        founds) {
+                    adapter.addItem(found);
+                }
+
+                adapter.addItemWithHandler(found2);
+                adapter.addItemWithHandler(found2);
+                adapter.addItemWithHandler(found2);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+        // finished loading
+        loading = false;
+    }
 
     // views
     private RecyclerView recyclerView;
@@ -41,6 +71,11 @@ public class Tab2Fragment extends Fragment {
     // vars
     private ArrayList<Found> lstFounds = new ArrayList<>();
     private RecyclerViewAdapter adapter;
+
+    // recycler view vars
+    LinearLayoutManager mLayoutManager;
+    private boolean loading = false;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     @Nullable
     @Override
@@ -51,24 +86,8 @@ public class Tab2Fragment extends Fragment {
             Log.d(TAG, "onCreateView: started fragment!");
 
             recyclerView = view.findViewById(R.id.recyclerview_tab2);
-//        AnimationSet set = new AnimationSet(true);
-//
-//        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-//        animation.setDuration(500);
-//        set.addAnimation(animation);
-//
-//        animation = new TranslateAnimation(
-//                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-//                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
-//        );
-//        animation.setDuration(100);
-//        set.addAnimation(animation);
-//
-//        LayoutAnimationController controller = new LayoutAnimationController(set, 0.5f);
-//
-//        recyclerView.setLayoutAnimation(controller);
 
-            initFounds();
+            initRecyclerView();
 
             Bitmap profile = BitmapFactory.decodeResource(getResources(),
                     R.drawable.ishay_1);
@@ -80,38 +99,121 @@ public class Tab2Fragment extends Fragment {
                     R.drawable.ic_passport);
 
             String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-            Found found2 = new Found(profile, badge, item, map, name, description);
+            final Found found2 = new Found(profile, badge, item, map, name, description);
 
-            adapter.addItem(found2);
-            adapter.addItem(found2);
-            adapter.addItem(found2);
-            adapter.addItem(found2);
-            adapter.addItem(found2);
 //            adapter.addItem(found2);
 //            adapter.addItem(found2);
 //            adapter.addItem(found2);
 //            adapter.addItem(found2);
+//            adapter.addItem(found2);
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < 6; i++) {
+                        adapter.addItemWithHandler(found2);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
         }
 
         return view;
     }
 
-    private void initFounds(){
-//        Bitmap profile = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ishay_1);
-//        Bitmap badge = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_crown);
-//        Bitmap map = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_map);
-//        Bitmap item = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_passport);
-//
-//        String name = "Ishay Muchtar", description = "Found this passport near the Town Hall!";
-//        Found found = new Found(profile, badge, item, map, name, description);
-//
-//        lstFounds.add(found);
+    public void onResponse() {
+        loading = false;
 
-        initRecyclerView();
+        Bitmap profile = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ishay_1);
+        Bitmap badge = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_crown);
+        Bitmap map = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_map);
+        Bitmap item = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_passport);
+
+        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
+        Found found2 = new Found(profile, badge, item, map, name, description);
+        adapter.addItem(found2);
+        adapter.addItem(found2);
+    }
+
+    public class OnVerticalScrollListener
+            extends RecyclerView.OnScrollListener {
+        private Tab2Fragment context;
+
+        public OnVerticalScrollListener(Tab2Fragment ctx) {
+            this.context = ctx;
+        }
+
+        @Override
+        public final void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (!recyclerView.canScrollVertically(-1)) {
+                onScrolledToTop();
+            } else if (!recyclerView.canScrollVertically(1)) {
+                onScrolledToBottom();
+            } else if (dy < 0) {
+                onScrolledUp();
+            } else if (dy > 0) {
+                onScrolledDown();
+            }
+        }
+
+        public void onScrolledUp() {
+        }
+
+        public void onScrolledDown() {
+        }
+
+        public void onScrolledToTop() {
+        }
+
+        public void onScrolledToBottom() {
+            //                Toast.makeText(getContext(), "Bottom page, last item id is: " + totalItemCount, Toast.LENGTH_SHORT).show();
+            if (!loading) {
+                totalItemCount = mLayoutManager.getItemCount();
+//                adapter.lstFounds.add(null);
+
+                // add progress bar to the bottom of the page
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.addItemWithHandler(null);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+//                recyclerView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        adapter.notifyItemInserted(adapter.lstFounds.size() - 1);
+//                    }
+//                });
+
+
+//                adapter.addItem(null);
+//                adapter.notifyItemInserted(adapter.lstFounds.size() - 1);
+                // set loading to true
+                loading = true;
+
+                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this);
+                worker.execute();
+            }
+//            Bitmap profile = BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.ishay_1);
+//            Bitmap badge = BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.ic_crown);
+//            Bitmap map = BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.ic_map);
+//            Bitmap item = BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.ic_passport);
+//
+//            String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
+//            Found found2 = new Found(profile, badge, item, map, name, description);
+//
+//            adapter.addItem(found2);
+        }
     }
 
     private void initRecyclerView(){
@@ -120,60 +222,11 @@ public class Tab2Fragment extends Fragment {
         adapter = new RecyclerViewAdapter(getContext(), lstFounds);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLayoutManager = new LinearLayoutManager(getActivity());
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+        recyclerView.setLayoutManager(mLayoutManager);
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-//                Toast.makeText(getActivity(), "onScrolledStateChanged called", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onScrollStateChanged: called");
-            }
-
-            public void slideUp(View view){
-                view.setVisibility(View.VISIBLE);
-                TranslateAnimation animate = new TranslateAnimation(
-                        0,                 // fromXDelta
-                        0,                 // toXDelta
-                        view.getHeight(),  // fromYDelta
-                        0);                // toYDelta
-                animate.setDuration(100);
-                animate.setFillAfter(true);
-                view.startAnimation(animate);
-            }
-
-            // slide the view from its current position to below itself
-            public void slideDown(View view){
-                TranslateAnimation animate = new TranslateAnimation(
-                        0,                 // fromXDelta
-                        0,                 // toXDelta
-                        0,                 // fromYDelta
-                        view.getHeight()); // toYDelta
-                animate.setDuration(100);
-                animate.setFillAfter(true);
-                view.startAnimation(animate);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-//                Toast.makeText(getActivity(), "onScrolled called", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onScrolled: called");
-
-                if (dy > 0 && bottomNavigationView.isShown()) {
-//                    bottomNavigationView.setVisibility(View.GONE);
-                    slideDown(bottomNavigationView);
-                } else if (dy < 0 ) {
-//                    bottomNavigationView.setVisibility(View.VISIBLE);
-                    slideUp(bottomNavigationView);
-                }
-            }
-            
-        });
+        recyclerView.addOnScrollListener(new OnVerticalScrollListener(this));
     }
 }
 
