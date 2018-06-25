@@ -19,9 +19,9 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
          * triggers when data is fetched from the database
          *
          * @param founds       ArrayList of Founds, with new data
-         * @param oldestPostId the new oldest post ID
+         * @param changedOldestFoundId the new oldest post ID
          */
-        void onDataFetched(List<Found> founds, String oldestPostId);
+        void onDataFetched(final List<Found> founds, String changedOldestFoundId);
     }
 
     private OnDataFetchedListener listener;
@@ -36,28 +36,24 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
 
     @Override
     protected List<Found> doInBackground(Integer... integers) {
+        Log.d(TAG, "doInBackground: starting database fetching");
         final List<Found> lst = new ArrayList<>();
-        /*
-        for (DataSnapshot snapShot : dataSnapshot.getChildren()){
-            Found found = ...
 
-            lst.add
-        }
-         */
-        // lst.add()...
         try {
-            Thread.sleep(1000);
 
             mDatabaseReference.orderByKey().startAt(mOldestPostId).limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot :
                             dataSnapshot.getChildren()) {
-                        Found found = snapshot.getValue(Found.class);
-                        lst.add(found);
-
-                        mOldestPostId = snapshot.getKey();
+//                        Found found = snapshot.getValue(Found.class);
+//                        lst.add(found);
+//
+//                        // save the new oldest retrieved found id
+//                        mOldestPostId = snapshot.getKey();
                     }
+
+                    Log.d(TAG, "onDataChange: finished retrieving data");
                 }
 
                 @Override
@@ -66,8 +62,10 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
                 }
             });
 
+            Thread.sleep(2000);
+
         } catch (InterruptedException e) {
-            Log.d(TAG, "doInBackground: sleeping...");
+            Log.e(TAG, "doInBackground: error:\n" + e.toString());
         }
 
         return lst;

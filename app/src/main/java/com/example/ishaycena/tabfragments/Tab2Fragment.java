@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ishaycena.tabfragments.Utilities.BackgroundWorker;
 import com.example.ishaycena.tabfragments.Utilities.Found;
@@ -27,44 +28,46 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     private static final String TAG = "Tab2Fragment";
     View view;
 
-    @Override
-    public void onDataFetched(final List<Found> founds, String oldestFoundId) {
-
-        Bitmap profile = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ishay_1);
-        Bitmap badge = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_crown);
-        Bitmap map = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_map);
-        Bitmap item = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_passport);
-
-        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-        final Found found2 = new Found(profile, badge, item, map, name, description);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                int size = adapter.lstFounds.size();
-
-                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
-                adapter.notifyItemRemoved(size - 1);
-                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
-                for (Found found :
-                        founds) {
-                    adapter.addItem(found);
-                }
-
-                adapter.addItemWithHandler(found2);
-                adapter.addItemWithHandler(found2);
-                adapter.addItemWithHandler(found2);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-
-        // finished loading
-        loading = false;
-    }
+//    @Override
+//    public void onDataFetched(final List<Found> founds, String changedOldestFoundId) {
+//        // save the new oldest found id
+//        this.oldestFoundId = changedOldestFoundId;
+//
+//        Bitmap profile = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ishay_1);
+//        Bitmap badge = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ic_crown);
+//        Bitmap map = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ic_map);
+//        Bitmap item = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.ic_passport);
+//
+//        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
+//        final Found found2 = new Found(profile, badge, item, map, name, description);
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                int size = adapter.lstFounds.size();
+//
+//                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
+//                adapter.notifyItemRemoved(size - 1);
+//                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
+//                for (Found found :
+//                        founds) {
+//                    adapter.addItem(found);
+//                }
+//
+//                adapter.addItemWithHandler(found2);
+//                adapter.addItemWithHandler(found2);
+//                adapter.addItemWithHandler(found2);
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//
+//        // finished loading
+//        loading = false;
+//    }
 
     // views
     private RecyclerView recyclerView;
@@ -137,7 +140,44 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     private void initFirebase() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Founds");
+
+        Bitmap profile = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ishay_1);
+        Bitmap badge = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_crown);
+        Bitmap map = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_map);
+        Bitmap item = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_passport);
+
+        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
+//        final Found found2 = new Found(profile, badge, item, map, name, description);
+        Found found = new Found(name, description, "imgUrl.com", "badgeUrl.com", "itemUrl.com");
+        mDatabaseReference.push().setValue(found);
     }
+
+    @Override
+    public void onDataFetched(final List<Found> founds, String changedOldestFoundId) {
+        // save oldest post id
+        oldestFoundId = changedOldestFoundId;
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                int size = adapter.lstFounds.size();
+                // remove progress bar (last item in the adapter)
+                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
+                adapter.notifyItemRemoved(size - 1);
+                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
+                for (Found found :
+                        founds) {
+                    adapter.addItem(found);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 
     public class OnVerticalScrollListener
             extends RecyclerView.OnScrollListener {
@@ -174,10 +214,13 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
             if (!loading) {
                 totalItemCount = mLayoutManager.getItemCount();
 
+                Toast.makeText(getContext(), "Reached bottom", Toast.LENGTH_SHORT).show();
+
                 // add progress bar to the bottom of the page
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d(TAG, "run: adding progress bar");
                         adapter.addItemWithHandler(null);
                         adapter.notifyDataSetChanged();
                     }

@@ -2,10 +2,25 @@ package com.example.ishaycena.tabfragments.Utilities;
 
 import android.graphics.Bitmap;
 
-public class Found {
+import java.io.Serializable;
+
+public class Found implements Serializable {
     private Bitmap imgProfileUrl, imgBadgeUrl, imgItem, imgMap;
     private String personName, description;
+    public String imgUrl, badgeUrl, itemUrl;
 
+    public class miniFound {
+        public String personName, description;
+        public String imgUrl, badgeUrl, itemUrl;
+
+        public miniFound(String personName, String description, String imgUrl, String badgeUrl, String itemUrl) {
+            this.personName = personName;
+            this.description = description;
+            this.imgUrl = imgUrl;
+            this.badgeUrl = badgeUrl;
+            this.itemUrl = itemUrl;
+        }
+    }
 
     public Found(Bitmap imgProfileUrl, Bitmap imgBadgeUrl, Bitmap imgItem, Bitmap imgMap, String personName, String description) {
         this.imgProfileUrl = imgProfileUrl;
@@ -14,6 +29,14 @@ public class Found {
         this.imgMap = imgMap;
         this.personName = personName;
         this.description = description;
+    }
+
+    public Found(String personName, String description, String imgUrl, String badgeUrl, String itemUrl) {
+        this.personName = personName;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.badgeUrl = badgeUrl;
+        this.itemUrl = itemUrl;
     }
 
     @Override
