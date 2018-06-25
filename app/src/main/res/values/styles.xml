@@ -25,4 +25,17 @@
 
     </style>
 
+    <style name="CustomStepperLayoutTheme" parent="MSDefaultStepperLayoutTheme">
+        <item name="ms_tabsContainerStyle">@style/CustomStepTabsContainerStyle</item>
+        <!--<item name="ms_bottomNavigationStyle">@style/CustomStepperBottomNavigationStyle</item>-->
+    </style>
+
+    <style name="CustomStepTabsContainerStyle" parent="MSStepTabsContainer">
+        <item name="android:background">#ffeccb</item>
+    </style>
+
+    <style name="CustomStepperBottomNavigationStyle">
+        <item name="android:background">#ffeccb</item>
+    </style>
+
 </resources>

@@ -40,51 +40,72 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true">
 
-
-        <LinearLayout
-            android:id="@+id/form_layout"
+        <ScrollView
+            android:id="@+id/found_scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="75dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <EditText
+
+            <LinearLayout
+                android:id="@+id/form_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:hint="Found name" />
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="75dp"
+                android:orientation="vertical">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:hint="Found description" />
+                <de.hdodenhof.circleimageview.CircleImageView
 
-            <EditText
-                android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Found category" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_menu_profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-            <EditText
-                android:layout_marginBottom="20dp"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_crown"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Click to add found location" />
 
-        </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:hint="Found description" />
+
+                <EditText
+                    android:layout_marginBottom="20dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Found category" />
+
+                <EditText
+                    android:layout_marginBottom="20dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Click to add found location" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/form_layout"
+            android:layout_below="@id/found_scroll"
             android:layout_centerInParent="true"
             android:orientation="horizontal">
 

@@ -1,18 +1,24 @@
 package com.example.ishaycena.tabfragments;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import butterknife.ButterKnife;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FoundActivity extends AppCompatActivity {
 
+    CircleImageView mProfilePic, mBadgePic, mFoundPic;
     RelativeLayout mainLayout;
     Button btnSubmit, btnCancel;
     @Override
@@ -23,6 +29,7 @@ public class FoundActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancelForm);
         btnSubmit = findViewById(R.id.btnSubmitFound);
         mainLayout = findViewById(R.id.form_main_layout);
+        //mProfilePic = fin
 
         setListeners();
     }
@@ -40,6 +47,11 @@ public class FoundActivity extends AppCompatActivity {
                                 finish();
                             }
                         });
+
+                // Bitmap profile =
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("founds");
+                // storageReference.put
+
                 snackbar.show();
             }
         });
@@ -50,5 +62,20 @@ public class FoundActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    /**
+     * converts bitmap into a byte array
+     *
+     * @param bmp bitmap image
+     * @return byte array from the bitmap
+     */
+    private static byte[] convertBitmapToByteArray(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        bmp.recycle();
+
+        return byteArray;
     }
 }

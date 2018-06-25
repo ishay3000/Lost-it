@@ -140,20 +140,6 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     private void initFirebase() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Founds");
-
-        Bitmap profile = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ishay_1);
-        Bitmap badge = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_crown);
-        Bitmap map = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_map);
-        Bitmap item = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_passport);
-
-        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-//        final Found found2 = new Found(profile, badge, item, map, name, description);
-        Found found = new Found(name, description, "imgUrl.com", "badgeUrl.com", "itemUrl.com");
-        mDatabaseReference.push().setValue(found);
     }
 
     @Override
@@ -229,8 +215,8 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
                 // set loading to true
                 loading = true;
 
-                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
-                worker.execute();
+//                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
+//                worker.execute();
             }
 //            Bitmap profile = BitmapFactory.decodeResource(getResources(),
 //                    R.drawable.ishay_1);
