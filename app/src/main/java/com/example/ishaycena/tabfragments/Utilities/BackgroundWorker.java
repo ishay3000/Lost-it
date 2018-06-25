@@ -38,7 +38,7 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
     protected List<Found> doInBackground(Integer... integers) {
         Log.d(TAG, "doInBackground: starting database fetching");
         final List<Found> lst = new ArrayList<>();
-
+        //fdg
         try {
 
             mDatabaseReference.orderByKey().startAt(mOldestPostId).limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
