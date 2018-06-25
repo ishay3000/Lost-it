@@ -3,6 +3,11 @@ package com.example.ishaycena.tabfragments.Utilities;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +15,57 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
     private static final String TAG = "BackgroundWorker";
 
     public interface OnDataFetchedListener {
-        void onDataFetched(List<Found> founds);
+        /**
+         * triggers when data is fetched from the database
+         *
+         * @param founds       ArrayList of Founds, with new data
+         * @param oldestPostId the new oldest post ID
+         */
+        void onDataFetched(List<Found> founds, String oldestPostId);
     }
 
     private OnDataFetchedListener listener;
+    private DatabaseReference mDatabaseReference;
+    private String mOldestPostId;
 
-    public BackgroundWorker(OnDataFetchedListener listener) {
+    public BackgroundWorker(OnDataFetchedListener listener, DatabaseReference reference, String oldestPostId) {
         this.listener = listener;
+        mDatabaseReference = reference;
+        mOldestPostId = oldestPostId;
     }
 
     @Override
     protected List<Found> doInBackground(Integer... integers) {
-        List<Found> lst = new ArrayList<>();
+        final List<Found> lst = new ArrayList<>();
+        /*
+        for (DataSnapshot snapShot : dataSnapshot.getChildren()){
+            Found found = ...
+
+            lst.add
+        }
+         */
         // lst.add()...
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
+
+            mDatabaseReference.orderByKey().startAt(mOldestPostId).limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot :
+                            dataSnapshot.getChildren()) {
+                        Found found = snapshot.getValue(Found.class);
+                        lst.add(found);
+
+                        mOldestPostId = snapshot.getKey();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         } catch (InterruptedException e) {
             Log.d(TAG, "doInBackground: sleeping...");
         }
@@ -34,7 +75,7 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
 
     @Override
     protected void onPostExecute(List<Found> founds) {
-        listener.onDataFetched(founds);
+        listener.onDataFetched(founds, mOldestPostId);
 //        ArrayList<Found> lst = adapter.lstFounds;
 //        int size = lst.size();
 //

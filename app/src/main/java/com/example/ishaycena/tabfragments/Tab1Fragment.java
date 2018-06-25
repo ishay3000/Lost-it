@@ -12,15 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
 
 public class Tab1Fragment extends Fragment {
     private static final String TAG = "Tab1Fragment";
@@ -38,6 +34,7 @@ public class Tab1Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
+            // inflate (show) the fragment layout on the screen
             view = inflater.inflate(R.layout.tab1_fragment, container, false);
 
             Log.d(TAG, "onCreateView: started fragment!");

@@ -1,23 +1,16 @@
 package com.example.ishaycena.tabfragments;
 
 import android.content.Intent;
-import android.support.design.internal.BottomNavigationMenu;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
-import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
-
-import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -46,9 +39,13 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
 
         TabLayout tabLayout = findViewById(R.id.tabs);
+        // lets the tabs use the view pager with its adapter
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     * sets listeners for button clicks
+     */
     private void setListeners(){
         fabFound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * initiates the view pager with its adapter, and adds fragments to it
+     *
+     * @param viewPager the view pager for the tabLayout
+     */
     private void initViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 

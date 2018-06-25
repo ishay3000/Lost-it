@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import com.example.ishaycena.tabfragments.Utilities.BackgroundWorker;
 import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,7 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     View view;
 
     @Override
-    public void onDataFetched(final List<Found> founds) {
-//        adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
+    public void onDataFetched(final List<Found> founds, String oldestFoundId) {
 
         Bitmap profile = BitmapFactory.decodeResource(getResources(),
                 R.drawable.ishay_1);
@@ -68,6 +69,12 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     // views
     private RecyclerView recyclerView;
 
+    // firebase
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mDatabaseReference;
+    String oldestFoundId = "";
+
+
     // vars
     private ArrayList<Found> lstFounds = new ArrayList<>();
     private RecyclerViewAdapter adapter;
@@ -88,6 +95,8 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
             recyclerView = view.findViewById(R.id.recyclerview_tab2);
 
             initRecyclerView();
+
+            initFirebase();
 
             Bitmap profile = BitmapFactory.decodeResource(getResources(),
                     R.drawable.ishay_1);
@@ -122,22 +131,12 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
         return view;
     }
 
-    public void onResponse() {
-        loading = false;
-
-        Bitmap profile = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ishay_1);
-        Bitmap badge = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_crown);
-        Bitmap map = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_map);
-        Bitmap item = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_passport);
-
-        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-        Found found2 = new Found(profile, badge, item, map, name, description);
-        adapter.addItem(found2);
-        adapter.addItem(found2);
+    /**
+     * init firebase references
+     */
+    private void initFirebase() {
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("Founds");
     }
 
     public class OnVerticalScrollListener
@@ -174,7 +173,6 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
             //                Toast.makeText(getContext(), "Bottom page, last item id is: " + totalItemCount, Toast.LENGTH_SHORT).show();
             if (!loading) {
                 totalItemCount = mLayoutManager.getItemCount();
-//                adapter.lstFounds.add(null);
 
                 // add progress bar to the bottom of the page
                 new Handler().post(new Runnable() {
@@ -184,20 +182,11 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
                         adapter.notifyDataSetChanged();
                     }
                 });
-//                recyclerView.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        adapter.notifyItemInserted(adapter.lstFounds.size() - 1);
-//                    }
-//                });
 
-
-//                adapter.addItem(null);
-//                adapter.notifyItemInserted(adapter.lstFounds.size() - 1);
                 // set loading to true
                 loading = true;
 
-                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this);
+                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
                 worker.execute();
             }
 //            Bitmap profile = BitmapFactory.decodeResource(getResources(),
@@ -223,7 +212,6 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
         recyclerView.setAdapter(adapter);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
-
         recyclerView.setLayoutManager(mLayoutManager);
 
         recyclerView.addOnScrollListener(new OnVerticalScrollListener(this));

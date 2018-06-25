@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SectionsPageAdapter extends FragmentPagerAdapter {
 
@@ -22,10 +21,6 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment, String fragmentTitle){
         lstFragments.add(fragment);
         lstFragmentTitles.add(fragmentTitle);
-    }
-
-    public void Foo(){
-
     }
 
     @Nullable

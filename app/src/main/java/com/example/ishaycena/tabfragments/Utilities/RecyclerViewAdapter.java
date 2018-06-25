@@ -82,6 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (getItemViewType(position) == ItemTypes.NORMAL) {
             //#region normal found item
+
             ViewHolder mHolder = (ViewHolder) holder;
             // profile pic
             Glide.with(context)

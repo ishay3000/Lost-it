@@ -1,11 +1,11 @@
 package com.example.ishaycena.tabfragments.Utilities;
 
 import android.graphics.Bitmap;
-import android.widget.TextView;
 
 public class Found {
     private Bitmap imgProfileUrl, imgBadgeUrl, imgItem, imgMap;
     private String personName, description;
+
 
     public Found(Bitmap imgProfileUrl, Bitmap imgBadgeUrl, Bitmap imgItem, Bitmap imgMap, String personName, String description) {
         this.imgProfileUrl = imgProfileUrl;
