@@ -28,47 +28,6 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     private static final String TAG = "Tab2Fragment";
     View view;
 
-//    @Override
-//    public void onDataFetched(final List<Found> founds, String changedOldestFoundId) {
-//        // save the new oldest found id
-//        this.oldestFoundId = changedOldestFoundId;
-//
-//        Bitmap profile = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ishay_1);
-//        Bitmap badge = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_crown);
-//        Bitmap map = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_map);
-//        Bitmap item = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.ic_passport);
-//
-//        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-//        final Found found2 = new Found(profile, badge, item, map, name, description);
-//        new Handler().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                int size = adapter.lstFounds.size();
-//
-//                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
-//                adapter.notifyItemRemoved(size - 1);
-//                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
-//                for (Found found :
-//                        founds) {
-//                    adapter.addItem(found);
-//                }
-//
-//                adapter.addItemWithHandler(found2);
-//                adapter.addItemWithHandler(found2);
-//                adapter.addItemWithHandler(found2);
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
-//
-//
-//        // finished loading
-//        loading = false;
-//    }
-
     // views
     private RecyclerView recyclerView;
 
@@ -159,7 +118,10 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
                         founds) {
                     adapter.addItem(found);
                 }
+                Toast.makeText(getContext(), String.format("Added %d items", founds.size()), Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
+
+                loading = false;
             }
         });
     }
@@ -215,8 +177,8 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
                 // set loading to true
                 loading = true;
 
-//                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
-//                worker.execute();
+                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
+                worker.execute();
             }
 //            Bitmap profile = BitmapFactory.decodeResource(getResources(),
 //                    R.drawable.ishay_1);

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.NoActionBar"
+    tools:context=".RegisterService.SignupActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:background="?attr/colorPrimary"
+            android:textAlignment="center"
+            android:textDirection="anyRtl"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Lost it!"
+            app:titleTextColor="@android:color/black">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_lost_found" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/signup_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.badoualy.stepperindicator.StepperIndicator
+        android:layout_margin="?attr/actionBarSize"
+
+        android:layout_below="@id/appbar"
+
+        android:id="@+id/stepper_indicator"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="16dp"
+
+        android:layout_marginRight="16dp"
+
+        android:layout_marginTop="32dp"
+
+        app:stpi_animDuration="1500"
+
+        app:stpi_indicatorColor="#0dbd00"
+
+        app:stpi_labels="@array/steps_labels"
+
+        app:stpi_lineDoneColor="#0dbd00"
+
+        app:stpi_stepCount="3"
+
+        app:stpi_useBottomIndicator="false" />
+
+</RelativeLayout>

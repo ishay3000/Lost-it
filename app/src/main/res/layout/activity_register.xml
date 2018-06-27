@@ -6,9 +6,13 @@
     android:layout_height="match_parent"
     app:ms_stepperType="tabs"
     android:id="@+id/stepperLayout"
+    app:ms_bottomNavigationBackground="@color/colorAccent"
     app:ms_stepperLayoutTheme="@style/CustomStepperLayoutTheme"
+    app:ms_showBackButtonOnFirstStep="true"
+    app:ms_stepperFeedbackType="tabs"
+    app:ms_tabNavigationEnabled="true"
     app:ms_inactiveStepColor="#a0a0a0"
-    app:ms_completeButtonColor="#ffad39"
+    app:ms_completeButtonColor="#ff0008"
     tools:context=".SignupService.RegisterActivity">
 
 </com.stepstone.stepper.StepperLayout>

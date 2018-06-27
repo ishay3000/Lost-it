@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+
+        <color android:color="@color/colorAccent" />
+
+    </item>
+    <item
+        android:drawable="@drawable/ic_lost_found"
+        android:width="100dp"
+        android:height="100dp"
+        android:gravity="center">
+
+        <!--<bitmap-->
+
+        <!--android:src="@drawable/ic_lost_found"-->
+
+        <!--android:tileMode="disabled"-->
+
+        <!--android:gravity="center"/>-->
+    </item>
+</layer-list>

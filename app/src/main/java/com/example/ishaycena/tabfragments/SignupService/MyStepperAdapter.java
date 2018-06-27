@@ -13,8 +13,8 @@ import com.stepstone.stepper.viewmodel.StepViewModel;
 
 public class MyStepperAdapter extends AbstractFragmentStepAdapter {
     private static final String TAG = "MyStepperAdapter";
-    private static final String CURRENT_STEP_POSITION_KEY = "StepPositionKey";
-    private static String[] TITLES = {"Details", "Profile Pic", "Finish"};
+    public static final String CURRENT_STEP_POSITION_KEY = "StepPositionKey";
+    private static String[] TITLES = {"Nothing", "Details", "Profile Pic", "Finish"};
 
     public MyStepperAdapter(FragmentManager fm, Context context) {
         super(fm, context);
@@ -23,27 +23,36 @@ public class MyStepperAdapter extends AbstractFragmentStepAdapter {
     @Override
     public Step createStep(int position) {
         Log.d(TAG, "createStep: position is: " + position);
-        Step1Fragment step = new Step1Fragment();
+        //Step1Fragment step1 = new Step1Fragment();
+        Register1Fragment step = null;
 
         switch (position) {
             case 0:
+                step = new Register1Fragment();
                 break;
             case 1:
+                step = new Register1Fragment();
                 break;
             case 2:
+                step = new Register1Fragment();
+                break;
+            case 3:
+                step = new Register1Fragment();
                 break;
             default:
                 break;
         }
         Bundle b = new Bundle();
         b.putInt(CURRENT_STEP_POSITION_KEY, position);
-        step.setArguments(b);
+        if (step != null) {
+            step.setArguments(b);
+        }
         return step;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @NonNull

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="steps_labels">
+        <item>Email Account</item>
+        <item>Home Address</item>
+        <item>Finish</item>
+    </string-array>
+</resources>
