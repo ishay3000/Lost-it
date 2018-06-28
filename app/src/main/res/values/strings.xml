@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Lost it!</string>
+    <string name="google_maps_API_key">AIzaSyAv8jrc2LYD_PBLdNv9iIg9ys8zTk7t4yk</string>
+
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>

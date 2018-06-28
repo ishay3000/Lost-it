@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme.NoActionBar"
+    android:id="@+id/signup_mainLayout"
     tools:context=".RegisterService.SignupActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -37,8 +38,10 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/signup_viewpager"
+        android:layout_below="@id/stepper_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
     <com.badoualy.stepperindicator.StepperIndicator
         android:layout_margin="?attr/actionBarSize"

@@ -16,22 +16,27 @@ class PagerAdapter extends FragmentPagerAdapter {
 
 
     @Override
-
     public int getCount() {
-
         return NUM_OF_STEPS;
     }
 
 
     @Override
-
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position + 1, position == getCount() - 1);
+        switch (position) {
+            case 0:
+                return PageFragment.newInstance(position + 1, position == getCount() - 1);
+            case 1:
+                return HomeAddressFragment.newInstance(position + 1, position == getCount() - 1);
+            case 2:
+                return PageFragment.newInstance(position + 1, position == getCount() - 1);
+            default:
+                return PageFragment.newInstance(position + 1, position == getCount() - 1);
+        }
     }
 
 
     @Override
-
     public CharSequence getPageTitle(int position) {
 
         return "Page " + position;
