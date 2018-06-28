@@ -51,6 +51,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class HomeAddressFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener {
+    private static final String TAG = "HomeAddressFragment";
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -80,8 +82,6 @@ public class HomeAddressFragment extends Fragment implements OnMapReadyCallback,
             init();
         }
     }
-
-    private static final String TAG = "MapActivity";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
