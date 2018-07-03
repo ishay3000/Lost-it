@@ -2,6 +2,7 @@
 <resources>
     <string-array name="steps_labels">
         <item>Email Account</item>
+        <item>Choose a Username</item>
         <item>Home Address</item>
         <item>Finish</item>
     </string-array>

@@ -68,8 +68,8 @@
 
         app:stpi_lineDoneColor="#0dbd00"
 
-        app:stpi_stepCount="3"
-
         app:stpi_useBottomIndicator="false" />
+    <!--app:stpi_stepCount="3"-->
+
 
 </RelativeLayout>

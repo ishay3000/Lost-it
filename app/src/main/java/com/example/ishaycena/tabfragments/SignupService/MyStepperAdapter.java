@@ -1,7 +1,6 @@
 package com.example.ishaycena.tabfragments.SignupService;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +13,7 @@ import com.stepstone.stepper.viewmodel.StepViewModel;
 public class MyStepperAdapter extends AbstractFragmentStepAdapter {
     private static final String TAG = "MyStepperAdapter";
     public static final String CURRENT_STEP_POSITION_KEY = "StepPositionKey";
-    private static String[] TITLES = {"Nothing", "Details", "Profile Pic", "Finish"};
+    private static String[] TITLES = {"Email", "Profile", "Home address", "Complete sign up"};
 
     public MyStepperAdapter(FragmentManager fm, Context context) {
         super(fm, context);
@@ -24,29 +23,31 @@ public class MyStepperAdapter extends AbstractFragmentStepAdapter {
     public Step createStep(int position) {
         Log.d(TAG, "createStep: position is: " + position);
         //Step1Fragment step1 = new Step1Fragment();
-        Register1Fragment step = null;
+        Step step = null;
 
         switch (position) {
             case 0:
-                step = new Register1Fragment();
+                step = EmailStepFragment.newInstance(position, false); //new EmailStepFragment();
                 break;
             case 1:
-                step = new Register1Fragment();
+                step = UsernamePhotoFragment.newInstance(position, false);
                 break;
             case 2:
-                step = new Register1Fragment();
+                step = HomeAddressStepFragment.newInstance(position, false);
                 break;
-            case 3:
-                step = new Register1Fragment();
-                break;
+//            case 3:
+//                // TODO ADD LAST PAGE LOGIC
+//                break;
             default:
+                step = EmailStepFragment.newInstance(position, true);
                 break;
         }
-        Bundle b = new Bundle();
-        b.putInt(CURRENT_STEP_POSITION_KEY, position);
-        if (step != null) {
-            step.setArguments(b);
-        }
+//        Bundle b = new Bundle();
+//        b.putInt(CURRENT_STEP_POSITION_KEY, position);
+//        if (step != null) {
+//            step.setArguments(b);
+//        }
+
         return step;
     }
 

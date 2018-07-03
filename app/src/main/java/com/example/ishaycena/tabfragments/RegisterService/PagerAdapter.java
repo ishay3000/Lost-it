@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 class PagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = "PagerAdapter";
 
-    public static final int NUM_OF_STEPS = 4;
+    public static final int NUM_OF_STEPS = 5;
 
 
     public PagerAdapter(FragmentManager fm) {
@@ -27,9 +27,9 @@ class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return PageFragment.newInstance(position + 1, position == getCount() - 1);
             case 1:
-                return HomeAddressFragment.newInstance(position + 1, position == getCount() - 1);
+                return UsernamePhotoFragment.newInstance(position + 1, position == getCount() - 1);
             case 2:
-                return PageFragment.newInstance(position + 1, position == getCount() - 1);
+                return HomeAddressFragment.newInstance(position + 1, position == getCount() - 1);
             default:
                 return PageFragment.newInstance(position + 1, position == getCount() - 1);
         }

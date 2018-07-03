@@ -24,12 +24,12 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         layout = findViewById(R.id.signup_mainLayout);
         pager = findViewById(R.id.signup_viewpager);
         pager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
         indicator = findViewById(R.id.stepper_indicator);
+        indicator.setStepCount(5);
 
         // We keep last page for a "finishing" page
         indicator.setViewPager(pager, true);

@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ishaycena.tabfragments.RegisterService.SignupActivity;
+import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         fabLost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SignupActivity.class));
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                 finish();
             }
         });
