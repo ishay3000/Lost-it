@@ -213,6 +213,7 @@ public class EmailStepFragment extends Fragment implements BlockingStep {
             // if the user didn't sign in
             return new VerificationError("You need to sign in!");
         } else {
+            ((RegisterActivity) Objects.requireNonNull(getActivity())).user.emailAddress = mAuth.getCurrentUser().getEmail();
             return null;
         }
     }

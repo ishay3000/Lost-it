@@ -375,6 +375,11 @@ public class HomeAddressStepFragment extends Fragment implements BlockingStep, O
                 Log.d(TAG, "onResult: exception: " + ex.toString());
 
             }
+            mMap.clear();
+            mLatLng = place.getLatLng();
+            mTmpLat = mLatLng.latitude;
+            mTmpLng = mLatLng.longitude;
+
             moveCamera(new LatLng(place.getViewport().getCenter().latitude, place.getViewport().getCenter().longitude)
                     , DEFAULT_ZOOM_LEVEL, place.getName().toString());
 
@@ -406,9 +411,10 @@ public class HomeAddressStepFragment extends Fragment implements BlockingStep, O
 
     @Override
     public VerificationError verifyStep() {
-        if (mTmpLng != 0) {
+        if (mTmpLat == 0) {
             return new VerificationError("You must choose your home address!");
         } else {
+            ((RegisterActivity) Objects.requireNonNull(getActivity())).user.latLng = new CustomLatLong(mTmpLat, mTmpLng);
             return null;
         }
     }

@@ -19,6 +19,8 @@ import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.Objects;
+
 import static android.app.Activity.RESULT_OK;
 
 public class UsernamePhotoFragment extends Fragment implements BlockingStep {
@@ -47,6 +49,7 @@ public class UsernamePhotoFragment extends Fragment implements BlockingStep {
     // vars
     String mCurrentPhotoPath;
     boolean isPickedPicture = false;
+    Uri mImageUri;
 
 
     @Nullable
@@ -141,6 +144,7 @@ public class UsernamePhotoFragment extends Fragment implements BlockingStep {
         if (requestCode == RC_PHOTO_CHOOSE && resultCode == RESULT_OK) {
             Uri realUri = data.getData();
             if (realUri != null) {
+                mImageUri = realUri;
                 imageView.setImageURI(realUri);
                 isPickedPicture = true;
             }
@@ -181,6 +185,8 @@ public class UsernamePhotoFragment extends Fragment implements BlockingStep {
     @Override
     public VerificationError verifyStep() {
         if (isPickedPicture && !edtUsername.getText().toString().equals("")) {
+            ((RegisterActivity) Objects.requireNonNull(getActivity())).user.imageUri = mImageUri;
+            ((RegisterActivity) Objects.requireNonNull(getActivity())).user.userName = edtUsername.getText().toString();
             return null;
         } else {
             // if didn't picked picture & picked a username
@@ -194,6 +200,7 @@ public class UsernamePhotoFragment extends Fragment implements BlockingStep {
             return new VerificationError(builder.toString());
         }
     }
+
 
     @Override
     public void onSelected() {

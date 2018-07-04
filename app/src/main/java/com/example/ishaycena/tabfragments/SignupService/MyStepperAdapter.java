@@ -35,9 +35,9 @@ public class MyStepperAdapter extends AbstractFragmentStepAdapter {
             case 2:
                 step = HomeAddressStepFragment.newInstance(position, false);
                 break;
-//            case 3:
-//                // TODO ADD LAST PAGE LOGIC
-//                break;
+            case 3:
+                step = new CompleteSignupFragment();
+                break;
             default:
                 step = EmailStepFragment.newInstance(position, true);
                 break;
