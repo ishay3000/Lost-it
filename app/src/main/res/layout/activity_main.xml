@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     app:layout_insetEdge="bottom"
-    tools:context=".MainActivity">
+    tools:context=".MainService.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

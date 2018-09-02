@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ishaycena.tabfragments.MainActivity;
+import com.example.ishaycena.tabfragments.MainService.MainActivity;
 import com.example.ishaycena.tabfragments.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -85,10 +85,16 @@ public class RegisterActivity extends AppCompatActivity implements StepperLayout
         Log.d(TAG, "onReturn: called");
     }
 
+    /**
+     * registers the user to firebase after completing the stepper layout registration
+     */
     private void registerUserToFirebase() {
         uploadProfilePicture();
     }
 
+    /**
+     * uploads the profile image to the firebase storage
+     */
     private void uploadProfilePicture() {
         // upload image
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -96,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements StepperLayout
         storageReference.putFile(user.imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // after uploading the image, we put the returned image-uri in the user object
                 user.imgURL = Objects.requireNonNull(taskSnapshot.getDownloadUrl()).toString();
                 Toast.makeText(RegisterActivity.this, "Uploaded image: " + user.imgURL, Toast.LENGTH_SHORT).show();
 
@@ -105,10 +112,14 @@ public class RegisterActivity extends AppCompatActivity implements StepperLayout
         });
     }
 
+    /**
+     * uploads the user's details to the database
+     */
     private void uploadUser() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Users");
 
+        // replacing dots (".") in the emails with commas (","), because firebase cannot contain dots
         databaseReference.child(user.emailAddress.replace('.', ',')).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

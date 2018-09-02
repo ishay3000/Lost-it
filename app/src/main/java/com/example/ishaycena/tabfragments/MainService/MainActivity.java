@@ -1,4 +1,4 @@
-package com.example.ishaycena.tabfragments;
+package com.example.ishaycena.tabfragments.MainService;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.FoundActivity;
+import com.example.ishaycena.tabfragments.R;
 import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -52,11 +54,9 @@ public class MainActivity extends AppCompatActivity {
 //        tabLayout.setupWithViewPager(viewPager);
 
         new Worker(this).execute();
-
     }
 
     private static class Worker extends AsyncTask<Void, Void, Void> {
-
         WeakReference<MainActivity> activityWeakReference;
 
         public Worker(MainActivity activity) {

@@ -1,4 +1,4 @@
-package com.example.ishaycena.tabfragments;
+package com.example.ishaycena.tabfragments.MainService;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.R;
 import com.example.ishaycena.tabfragments.Utilities.BackgroundWorker;
 import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
@@ -158,7 +159,6 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
         }
 
         public void onScrolledToBottom() {
-            //                Toast.makeText(getContext(), "Bottom page, last item id is: " + totalItemCount, Toast.LENGTH_SHORT).show();
             if (!loading) {
                 totalItemCount = mLayoutManager.getItemCount();
 

@@ -1,4 +1,4 @@
-package com.example.ishaycena.tabfragments;
+package com.example.ishaycena.tabfragments.MainService;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
