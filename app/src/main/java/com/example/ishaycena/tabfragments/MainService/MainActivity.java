@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ishaycena.tabfragments.FoundActivity;
 import com.example.ishaycena.tabfragments.R;
 import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        // lets the tabs use the view pager with its adapter
 //        tabLayout.setupWithViewPager(viewPager);
 
+
         new Worker(this).execute();
     }
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         fabFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FoundActivity.class));
+                startActivity(new Intent(MainActivity.this, com.example.ishaycena.tabfragments.FoundService.FoundActivity.class));
                 finish();
             }
         });
