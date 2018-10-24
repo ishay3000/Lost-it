@@ -78,7 +78,7 @@ public class Tab3Fragment extends Fragment {
 //        String name = "Ishay Muchtar", description = "Found this passport near the Town Hall!";
 //        Found found = new Found(profile, badge, item, map, name, description);
 //
-//        lstFounds.add(found);
+//        mLstFounds.add(found);
 
         initRecyclerView();
     }

@@ -3,6 +3,7 @@ package com.example.ishaycena.tabfragments;
 
 import android.net.Uri;
 
+import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
 import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
 
 public class UserSingleton {
@@ -18,6 +19,7 @@ public class UserSingleton {
 
     private String mUsername, mUserEmail;
     private Uri mUserProfileUri;
+    private CustomLatLong mLatLong;
     private static RegisterActivity.User USER_INSTANCE = null;
 
     public static void setUserInstance(RegisterActivity.User user) {
@@ -51,6 +53,14 @@ public class UserSingleton {
 
     public void setmUserProfileUri(Uri mUserProfileUri) {
         this.mUserProfileUri = mUserProfileUri;
+    }
+
+    public CustomLatLong getmLatLong() {
+        return USER_INSTANCE.latLng;
+    }
+
+    public void setmLatLong(CustomLatLong mLatLong) {
+        this.mLatLong = mLatLong;
     }
 
 //#endregion

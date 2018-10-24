@@ -41,17 +41,16 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
 
         // fetching from database
         try {
-
             mDatabaseReference.orderByKey().startAt(mOldestPostId).limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot :
                             dataSnapshot.getChildren()) {
-//                        Found found = snapshot.getValue(Found.class);
-//                        lst.add(found);
-//
-//                        // save the new oldest retrieved found id
-//                        mOldestPostId = snapshot.getKey();
+                        Found found = snapshot.getValue(Found.class);
+                        lst.add(found);
+
+                        // save the new oldest retrieved found id
+                        mOldestPostId = snapshot.getKey();
                     }
 
                     Log.d(TAG, "onDataChange: finished retrieving data");
@@ -75,10 +74,10 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
     @Override
     protected void onPostExecute(List<Found> founds) {
         listener.onDataFetched(founds, mOldestPostId);
-//        ArrayList<Found> lst = adapter.lstFounds;
-//        int size = lst.size();
+//        ArrayList<Found> mLst = adapter.lstFounds;
+//        int size = mLst.size();
 //
-//        lst.remove(size - 1);
+//        mLst.remove(size - 1);
 ////                    Bitmap profile = BitmapFactory.decodeResource( getResources(),
 ////                    R.drawable.ishay_1);
 ////            Bitmap badge = BitmapFactory.decodeResource(getResources(),
@@ -92,7 +91,7 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
 ////            Found found2 = new Found(profile, badge, item, map, name, description);
 //
 ////            adapter.addItem(found2);
-//        adapter.notifyItemRangeChanged(size - 1, lst.size() - size);
+//        adapter.notifyItemRangeChanged(size - 1, mLst.size() - size);
 //        response.onResponse();
     }
 }

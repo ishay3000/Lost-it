@@ -1,7 +1,10 @@
 package com.example.ishaycena.tabfragments.Utilities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.example.ishaycena.tabfragments.MapService.LocationActivity;
 import com.example.ishaycena.tabfragments.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,12 +40,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     // vars
     private Context context;
-    public ArrayList<Found> lstFounds;
+    public ArrayList<Found> mLstFounds;
     private int lastItemPosition = -1;
 
     @Override
     public int getItemViewType(int position) {
-        if (lstFounds.get(position) != null) {
+        if (mLstFounds.get(position) != null) {
             return ItemTypes.NORMAL;
         } else {
             return ItemTypes.FOOTER;
@@ -47,16 +54,61 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public RecyclerViewAdapter(Context context, ArrayList<Found> founds) {
         this.context = context;
-        this.lstFounds = founds;
+        this.mLstFounds = founds;
     }
 
     public void addItem(Found found){
-        lstFounds.add(found);
+        mLstFounds.add(found);
+        notifyDataSetChanged();
+    }
+
+    public void addFetchedItem(List<com.example.ishaycena.tabfragments.FoundService.Found> lstFounds) {
+        for (com.example.ishaycena.tabfragments.FoundService.Found found : lstFounds) {
+            final Found adapterFound = new Found();
+            // add item picture
+            Glide.with(context)
+                    .asBitmap()
+                    .load(found.getmFoundImageUrl())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            adapterFound.setImgItem(resource);
+                        }
+                    });
+            // profile pic
+            Glide.with(context)
+                    .asBitmap()
+                    .load(mLstFounds.get(0).getImgProfileUrl())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            adapterFound.setImgProfileUrl(resource);
+                        }
+                    });
+            // badge
+            Glide.with(context)
+                    .asBitmap()
+                    .load(mLstFounds.get(0).getImgProfileUrl())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            adapterFound.setImgProfileUrl(resource);
+                        }
+                    });
+            // desc
+            adapterFound.setDescription(found.getmFoundDescription());
+            // username
+            adapterFound.setPersonName(found.getmUserName());
+            adapterFound.setCustomLatLong(found.getmLatLong());
+
+            // at last, add the item to the list
+            mLstFounds.add(adapterFound);
+        }
         notifyDataSetChanged();
     }
 
     public void addItemWithHandler(Found found) {
-        lstFounds.add(found);
+        mLstFounds.add(found);
     }
 
     @NonNull
@@ -87,17 +139,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // profile pic
             Glide.with(context)
                     .asBitmap()
-                    .load(lstFounds.get(position).getImgProfileUrl())
+                    .load(mLstFounds.get(position).getImgProfileUrl())
                     .into(mHolder.imgProfilePic);
             // badge
             Glide.with(context)
                     .asBitmap()
-                    .load(lstFounds.get(position).getImgBadgeUrl())
+                    .load(mLstFounds.get(position).getImgBadgeUrl())
                     .into(mHolder.imgBadgePic);
             // found item
             Glide.with(context)
                     .asBitmap()
-                    .load(lstFounds.get(position).getImgItem())
+                    .load(mLstFounds.get(position).getImgItem())
                     .into(mHolder.imgItemPic);
             // open map
             Glide.with(context)
@@ -105,10 +157,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .into(mHolder.imgOpenMap);
 
             // person name
-            mHolder.tvPersonName.setText(lstFounds.get(position).getPersonName());
+            mHolder.tvPersonName.setText(mLstFounds.get(position).getPersonName());
 
             // description
-            mHolder.tvDescription.setText(lstFounds.get(position).getDescription());
+            mHolder.tvDescription.setText(mLstFounds.get(position).getDescription());
 
             // start the slide-in animation
 //         setAnimation(holder.itemView, position);
@@ -118,12 +170,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.itemView.startAnimation(animation);
             lastItemPosition = position;
 
+            mHolder.imgOpenMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent locationIntent = new Intent(context, LocationActivity.class);
+                    locationIntent.putExtra("LOCATION", mLstFounds.get(position).getCustomLatLong());
+                    context.startActivity(locationIntent);
+                }
+            });
+
             mHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: clicked item");
 
-                    Toast.makeText(context, "clicked:\n" + lstFounds.get(position).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "clicked:\n" + mLstFounds.get(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
             //#endregion
@@ -158,7 +219,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return lstFounds.size();
+        return mLstFounds.size();
     }
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,7 @@
 package com.example.ishaycena.tabfragments.FoundService;
 
+import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  */
 public class Found implements Serializable {
     private String mUserName, mFoundDescription, mProfileImageUrl, mFoundImageUrl;
+    private CustomLatLong mLatLong;
 
     /**
      * instance of a Found. This will be loaded from firebase.
@@ -16,11 +19,15 @@ public class Found implements Serializable {
      * @param mProfileImageUrl  user profile image url (get from singleton)
      * @param mFoundImageUrl    found image url
      */
-    public Found(String mUsername, String mFoundDescription, String mProfileImageUrl, String mFoundImageUrl) {
+    public Found(String mUsername, String mFoundDescription, String mProfileImageUrl, String mFoundImageUrl, CustomLatLong latLong) {
         this.mUserName = mUserName;
         this.mFoundDescription = mFoundDescription;
         this.mProfileImageUrl = mProfileImageUrl;
         this.mFoundImageUrl = mFoundImageUrl;
+        mLatLong = latLong;
+    }
+
+    public Found() {
     }
 
     @Override
@@ -80,6 +87,14 @@ public class Found implements Serializable {
 
     public void setmFoundImageUrl(String mFoundImageUrl) {
         this.mFoundImageUrl = mFoundImageUrl;
+    }
+
+    public CustomLatLong getmLatLong() {
+        return mLatLong;
+    }
+
+    public void setmLatLong(CustomLatLong mLatLong) {
+        this.mLatLong = mLatLong;
     }
 
     //#endregion

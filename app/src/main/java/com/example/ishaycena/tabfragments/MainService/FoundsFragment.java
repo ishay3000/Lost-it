@@ -15,8 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.FoundService.FoundFetcher;
 import com.example.ishaycena.tabfragments.R;
-import com.example.ishaycena.tabfragments.Utilities.BackgroundWorker;
+import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
 import com.example.ishaycena.tabfragments.Utilities.Found;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFetchedListener {
-    private static final String TAG = "Tab2Fragment";
+public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDataFetchedListener,*/
+        /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.Found>*/
+        FoundFetcher.OnDataFetchedListener {
+    private static final String TAG = "FoundsFragment";
     View view;
 
     // views
@@ -35,17 +38,18 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
     // firebase
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
-    String oldestFoundId = "";
+    String oldestFoundId = "";// "-LPaBKqD1ll8hcpoXs7o";
 
 
     // vars
     private ArrayList<Found> lstFounds = new ArrayList<>();
     private RecyclerViewAdapter adapter;
 
+
     // recycler view vars
     LinearLayoutManager mLayoutManager;
     private boolean loading = false;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Nullable
     @Override
@@ -53,7 +57,7 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
         if (view == null) {
             view = inflater.inflate(R.layout.tab2_fragment, container, false);
 
-            Log.d(TAG, "onCreateView: started fragment!");
+            Log.d(TAG, "onCreateView: started fragment");
 
             recyclerView = view.findViewById(R.id.recyclerview_tab2);
 
@@ -72,6 +76,7 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
 
             String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
             final Found found2 = new Found(profile, badge, item, map, name, description);
+            found2.setCustomLatLong(new CustomLatLong(30.084041, 34.887761999999995));
 
 //            adapter.addItem(found2);
 //            adapter.addItem(found2);
@@ -99,40 +104,92 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
      */
     private void initFirebase() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("Founds");
+        mDatabaseReference = mFirebaseDatabase.getReference("Founds NEW");
     }
 
     @Override
-    public void onDataFetched(final List<Found> founds, String changedOldestFoundId) {
-        // save oldest post id
+    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.Found> founds, String changedOldestFoundId) {
+        Log.d(TAG, "onDataFetched: fetched founds");
+
         oldestFoundId = changedOldestFoundId;
 
+        Toast.makeText(getContext(), "Fetched founds: " + founds.size(), Toast.LENGTH_SHORT).show();
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                int size = adapter.lstFounds.size();
+//                int size = adapter.mLstFounds.size();
+                int size = founds.size();
                 // remove progress bar (last item in the adapter)
-                adapter.lstFounds.remove(adapter.lstFounds.size() - 1);
+                adapter.mLstFounds.remove(adapter.mLstFounds.size() - 1);
                 adapter.notifyItemRemoved(size - 1);
-                adapter.notifyItemRangeChanged(size - 1, adapter.lstFounds.size() - size);
-                for (Found found :
-                        founds) {
-                    adapter.addItem(found);
-                }
-                Toast.makeText(getContext(), String.format("Added %d items", founds.size()), Toast.LENGTH_SHORT).show();
+                adapter.notifyItemRangeChanged(size - 1, adapter.mLstFounds.size() - size);
+
                 adapter.notifyDataSetChanged();
+
+                // add the items
+                adapter.addFetchedItem(founds);
 
                 loading = false;
             }
         });
     }
 
+/*    @Override
+    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.Found> founds, String changedOldestFoundId) {
+        Log.d(TAG, "onDataFetched: fetched founds");
+
+        Toast.makeText(getContext(), "Fetched founds: " + founds.size(), Toast.LENGTH_SHORT).show();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+//                int size = adapter.mLstFounds.size();
+                int size = founds.size();
+                // remove progress bar (last item in the adapter)
+                adapter.mLstFounds.remove(adapter.mLstFounds.size() - 1);
+                adapter.notifyItemRemoved(size - 1);
+                adapter.notifyItemRangeChanged(size - 1, adapter.mLstFounds.size() - size);
+
+                adapter.notifyDataSetChanged();
+
+                // add the items
+                adapter.addFetchedItem(founds);
+
+                loading = false;
+            }
+        });
+    }*/
+
+/*    @Override
+    public void onDataFetched(List<Found> founds, String changedOldestFoundId) {
+        Log.d(TAG, "onDataFetched: fetched founds");
+
+        Toast.makeText(getContext(), "Fetched founds: " + founds.size(), Toast.LENGTH_SHORT).show();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+//                int size = adapter.mLstFounds.size();
+                int size = founds.size();
+                // remove progress bar (last item in the adapter)
+                adapter.mLstFounds.remove(adapter.mLstFounds.size() - 1);
+                adapter.notifyItemRemoved(size - 1);
+                adapter.notifyItemRangeChanged(size - 1, adapter.mLstFounds.size() - size);
+
+                adapter.notifyDataSetChanged();
+
+                // add the items
+                adapter.addFetchedItem(founds);
+
+                loading = false;
+            }
+        });
+    }*/
+
 
     public class OnVerticalScrollListener
             extends RecyclerView.OnScrollListener {
-        private Tab2Fragment context;
+        private FoundsFragment context;
 
-        public OnVerticalScrollListener(Tab2Fragment ctx) {
+        public OnVerticalScrollListener(FoundsFragment ctx) {
             this.context = ctx;
         }
 
@@ -177,27 +234,18 @@ public class Tab2Fragment extends Fragment implements BackgroundWorker.OnDataFet
                 // set loading to true
                 loading = true;
 
-                BackgroundWorker worker = new BackgroundWorker(Tab2Fragment.this, mDatabaseReference, oldestFoundId);
-                worker.execute();
+                new FoundFetcher(FoundsFragment.this, mDatabaseReference, oldestFoundId).FetchData();
+
+/*                new FetchWorker<>(FoundsFragment.this,
+                        com.example.ishaycena.tabfragments.FoundService.Found.class,
+                        mDatabaseReference,
+                        oldestFoundId).execute();*/
             }
-//            Bitmap profile = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.ishay_1);
-//            Bitmap badge = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.ic_crown);
-//            Bitmap map = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.ic_map);
-//            Bitmap item = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.ic_passport);
-//
-//            String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-//            Found found2 = new Found(profile, badge, item, map, name, description);
-//
-//            adapter.addItem(found2);
         }
     }
 
     private void initRecyclerView(){
-        Log.d(TAG, "initRecyclerView: init recyclerview");
+        Log.d(TAG, "initRecyclerView: initRecyclerView");
 
         adapter = new RecyclerViewAdapter(getContext(), lstFounds);
         recyclerView.setAdapter(adapter);

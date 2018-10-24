@@ -2,11 +2,14 @@ package com.example.ishaycena.tabfragments.Utilities;
 
 import android.graphics.Bitmap;
 
+import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
+
 import java.io.Serializable;
 
 public class Found implements Serializable {
     private Bitmap imgProfileUrl, imgBadgeUrl, imgItem, imgMap;
     private String personName, description;
+    private CustomLatLong customLatLong;
 
     public Found(Bitmap imgProfileUrl, Bitmap imgBadgeUrl, Bitmap imgItem, Bitmap imgMap, String personName, String description) {
         this.imgProfileUrl = imgProfileUrl;
@@ -17,6 +20,8 @@ public class Found implements Serializable {
         this.description = description;
     }
 
+    public Found() {
+    }
 
     @Override
     public String toString() {
@@ -72,5 +77,13 @@ public class Found implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public CustomLatLong getCustomLatLong() {
+        return customLatLong;
+    }
+
+    public void setCustomLatLong(CustomLatLong customLatLong) {
+        this.customLatLong = customLatLong;
     }
 }

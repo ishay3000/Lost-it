@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.ishaycena.tabfragments.MainService.MainActivity;
 import com.example.ishaycena.tabfragments.R;
@@ -118,28 +119,28 @@ public class FoundActivity extends AppCompatActivity {
                 Found found = new Found(user.getmUsername(),
                         mFoundDescriptionTextView.getText().toString(),
                         "TO BE ADDED",
-                        mUploadedFoundUri.toString());
-                found.setmUserName("Ishay");
+                        mUploadedFoundUri.toString(), UserSingleton.getOurInstance().getmLatLong());
+                found.setmUserName(UserSingleton.getOurInstance().getmUsername());
                 uploadFound(found);
             }
         });
     }
 
-    private void uploadFound(Found found) {
+    private void uploadFound(final Found found) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Founds NEW");
 
         try {
             databaseReference
-                    .child(UserSingleton.getOurInstance().getmUsername())
+//                    .child(UserSingleton.getOurInstance().getmUsername())
                     .push()
                     .setValue(found)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-//                                Toast.makeText(FoundActivity.this, "Added found: " + found.toString(), Toast.LENGTH_SHORT).show();
-                                new Intent(FoundActivity.this, MainActivity.class);
+                                Toast.makeText(FoundActivity.this, "Added found: " + found.toString(), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(FoundActivity.this, MainActivity.class));
                             }
                         }
                     })
