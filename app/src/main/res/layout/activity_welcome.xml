@@ -6,7 +6,7 @@
     android:background="@drawable/welcome_animation_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".WelcomeService.WelcomeActivity">
 
 
     <ImageView
@@ -23,6 +23,7 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/welcome_btn_sign_in"
             android:text="Log In"
             android:background="@drawable/welcome_rounded_button"
             android:layout_marginEnd="20dp"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/welcome_btn_register"
             android:text="Register"
             android:background="@drawable/welcome_rounded_button"
             android:textSize="25sp"

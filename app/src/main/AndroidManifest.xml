@@ -33,11 +33,14 @@
             android:name=".MainService.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.BrandedLaunch">
-            <!--            <intent-filter>
+
+            <!--
+                            <intent-filter>
                             <action android:name="android.intent.action.MAIN" />
 
                             <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>-->
+                        </intent-filter>
+            -->
         </activity>
         <activity android:name=".TestActivity" />
         <activity
@@ -64,11 +67,9 @@
         <activity
             android:name=".FoundService.FoundActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".WelcomeService.WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -77,6 +78,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

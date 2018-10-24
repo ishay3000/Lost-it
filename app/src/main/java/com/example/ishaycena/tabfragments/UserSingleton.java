@@ -3,6 +3,8 @@ package com.example.ishaycena.tabfragments;
 
 import android.net.Uri;
 
+import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
+
 public class UserSingleton {
     private static final UserSingleton ourInstance = new UserSingleton();
 
@@ -16,6 +18,11 @@ public class UserSingleton {
 
     private String mUsername, mUserEmail;
     private Uri mUserProfileUri;
+    private static RegisterActivity.User USER_INSTANCE = null;
+
+    public static void setUserInstance(RegisterActivity.User user) {
+        USER_INSTANCE = user;
+    }
 
     //#region properties
     public static UserSingleton getOurInstance() {

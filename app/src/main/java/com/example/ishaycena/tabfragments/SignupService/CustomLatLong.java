@@ -7,4 +7,7 @@ public class CustomLatLong {
         this.lat = lat;
         this.lng = lng;
     }
+
+    public CustomLatLong() {
+    }
 }

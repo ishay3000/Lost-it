@@ -3,15 +3,17 @@ package com.example.ishaycena.tabfragments.MainService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.ProfileActivity;
 import com.example.ishaycena.tabfragments.R;
-import com.example.ishaycena.tabfragments.SignupService.RegisterActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
     private SectionsPageAdapter sectionsPageAdapter;
 
+    // vars
+    private BottomNavigationView.OnNavigationItemSelectedListener mItemSelectedListener;
+
+    // widgets
     private ViewPager viewPager;
     public BottomNavigationView bottomNavigationView;
     com.getbase.floatingactionbutton.FloatingActionButton fabFound;
@@ -54,6 +60,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         new Worker(this).execute();
+        mItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()) {
+                    case R.id.menu_profile:
+//                        viewPager.setCurrentItem(3);
+                        intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    case R.id.menu_categories:
+                        return true;
+
+                    case R.id.menu_home:
+                        return true;
+                }
+                return false;
+            }
+        };
+        bottomNavigationView.setOnNavigationItemSelectedListener(mItemSelectedListener);
     }
 
     private static class Worker extends AsyncTask<Void, Void, Void> {
@@ -98,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
         fabLost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-                finish();
+               /* startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                finish();*/
+                Toast.makeText(MainActivity.this, "Adding a lost isn't supported yet", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -115,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new Tab1Fragment(), "Lost");
         adapter.addFragment(new Tab2Fragment(), "Found");
         adapter.addFragment(new Tab3Fragment(), "HighScores");
+        // TODO add fragments for bottom nav view
+//        adapter.addFragment(new NavProfileFragment(), "Profile");
 
         viewPager.setAdapter(adapter);
 

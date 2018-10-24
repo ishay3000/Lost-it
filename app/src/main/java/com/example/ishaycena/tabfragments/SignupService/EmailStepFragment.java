@@ -85,8 +85,7 @@ public class EmailStepFragment extends Fragment implements BlockingStep {
                 public void onClick(View v) {
                     if (mAuth.getCurrentUser() == null) {
                         // if user didn't choose an account, let him choose one
-                        Intent intent = mGoogleSignInClient.getSignInIntent();
-                        startActivityForResult(intent, RC_SIGN_IN);
+                        signIn();
                     } else {
                         // otherwise, if he regrets clicking that account, he can choose again
                         signOut();
