@@ -118,7 +118,7 @@ public class FoundActivity extends AppCompatActivity {
                 // after uploading the image, upload the found to the database with the link
                 Found found = new Found(user.getmUsername(),
                         mFoundDescriptionTextView.getText().toString(),
-                        "TO BE ADDED",
+                        UserSingleton.getOurInstance().getProfileImageStringUrl(),
                         mUploadedFoundUri.toString(), UserSingleton.getOurInstance().getmLatLong());
                 found.setmUserName(UserSingleton.getOurInstance().getmUsername());
                 uploadFound(found);

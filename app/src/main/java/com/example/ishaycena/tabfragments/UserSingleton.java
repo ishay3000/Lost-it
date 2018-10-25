@@ -32,7 +32,7 @@ public class UserSingleton {
     }
 
     public String getmUsername() {
-        return mUsername;
+        return USER_INSTANCE.userName;
     }
 
     public void setmUsername(String mUsername) {
@@ -40,7 +40,7 @@ public class UserSingleton {
     }
 
     public String getmUserEmail() {
-        return mUserEmail;
+        return USER_INSTANCE.emailAddress;
     }
 
     public void setmUserEmail(String mUserEmail) {
@@ -49,6 +49,10 @@ public class UserSingleton {
 
     public Uri getmUserProfileUri() {
         return mUserProfileUri;
+    }
+
+    public String getProfileImageStringUrl() {
+        return USER_INSTANCE.imgURL;
     }
 
     public void setmUserProfileUri(Uri mUserProfileUri) {

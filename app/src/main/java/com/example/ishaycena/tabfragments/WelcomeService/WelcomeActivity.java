@@ -143,6 +143,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             UserSingleton.setUserInstance(userTemplate);
                             // go to main activity
                             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

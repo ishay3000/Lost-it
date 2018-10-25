@@ -78,7 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // profile pic
             Glide.with(context)
                     .asBitmap()
-                    .load(mLstFounds.get(0).getImgProfileUrl())
+                    .load(found.getmProfileImageUrl())
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

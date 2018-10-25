@@ -1,13 +1,14 @@
 package com.example.ishaycena.tabfragments.FoundService;
 
 import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
+import com.example.ishaycena.tabfragments.Utilities.AbsItem;
 
 import java.io.Serializable;
 
 /**
  * Represents a found in the database
  */
-public class Found implements Serializable {
+public class Found extends AbsItem implements Serializable {
     private String mUserName, mFoundDescription, mProfileImageUrl, mFoundImageUrl;
     private CustomLatLong mLatLong;
 
