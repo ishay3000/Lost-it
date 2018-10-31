@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.LostService.LostActivity;
 import com.example.ishaycena.tabfragments.ProfileActivity;
 import com.example.ishaycena.tabfragments.R;
+import com.example.ishaycena.tabfragments.UserSingleton;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
@@ -106,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Toast.makeText(activityWeakReference.get().getApplicationContext(), "Finished loading activity", Toast.LENGTH_SHORT).show();
+            String welcomeMessage = String.format("Welcome back, %s", UserSingleton.getOurInstance().getmUsername());
+            Toast.makeText(activityWeakReference.get().getApplicationContext(), welcomeMessage, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -125,9 +128,8 @@ public class MainActivity extends AppCompatActivity {
         fabLost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-                finish();*/
-                Toast.makeText(MainActivity.this, "Adding a lost isn't supported yet", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, LostActivity.class));
+                finish();
             }
         });
     }
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new Tab1Fragment(), "Lost");
+        adapter.addFragment(new LostFragment(), "Lost");
         adapter.addFragment(new FoundsFragment(), "Found");
         adapter.addFragment(new Tab3Fragment(), "HighScores");
         // TODO add fragments for bottom nav view

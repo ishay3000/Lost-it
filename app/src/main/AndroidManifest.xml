@@ -75,7 +75,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MapService.LocationActivity"></activity>
+        <activity android:name=".MapService.LocationActivity" />
+        <activity android:name=".LostService.LostActivity"></activity>
     </application>
 
 </manifest>

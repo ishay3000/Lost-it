@@ -27,10 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDataFetchedListener,*/
+public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataFetchedListener,*/
         /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.Found>*/
         /*FoundFetcher.OnDataFetchedListener, */com.example.ishaycena.tabfragments.FoundService.DataFetcher.OnDataFetchedListener {
-    private static final String TAG = "FoundsFragment";
+    private static final String TAG = "LostFragment";
     View view;
 
     // views
@@ -57,12 +57,12 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.tab2_fragment, container, false);
+            view = inflater.inflate(R.layout.tab1_fragment, container, false);
 
             Log.d(TAG, "onCreateView: started fragment");
 
-            recyclerView = view.findViewById(R.id.recyclerview_tab2);
-            mSwipeLayout = view.findViewById(R.id.found_swipelayout);
+            recyclerView = view.findViewById(R.id.recyclerview_tab1);
+            mSwipeLayout = view.findViewById(R.id.lost_swipelayout);
 
             initRecyclerView();
 
@@ -129,7 +129,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
             loading = true;
 
             //new FoundFetcher(FoundsFragment.this, mDatabaseReference, oldestFoundId).FetchData();
-            new com.example.ishaycena.tabfragments.FoundService.DataFetcher<>(FoundsFragment.this,
+            new com.example.ishaycena.tabfragments.FoundService.DataFetcher<>(LostFragment.this,
                     com.example.ishaycena.tabfragments.FoundService.Found.class,
                     mDatabaseReference,
                     oldestFoundId).FetchData();
@@ -141,7 +141,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
      */
     private void initFirebase() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("Founds NEW");
+        mDatabaseReference = mFirebaseDatabase.getReference("Lost");
     }
 
     //#region old found fetcher
@@ -175,7 +175,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
 
     @Override
     public synchronized void onDataFetched(final List<? extends AbsItem> data, String changedOldestDataId) {
-        Log.d(TAG, "onDataFetched: fetched founds");
+        Log.d(TAG, "onDataFetched: fetched lost");
 
         oldestFoundId = changedOldestDataId;
 
@@ -206,9 +206,9 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
 
     public class OnVerticalScrollListener
             extends RecyclerView.OnScrollListener {
-        private FoundsFragment context;
+        private LostFragment context;
 
-        public OnVerticalScrollListener(FoundsFragment ctx) {
+        public OnVerticalScrollListener(LostFragment ctx) {
             this.context = ctx;
         }
 

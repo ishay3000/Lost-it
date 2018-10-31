@@ -12,6 +12,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * fetches data from firebase
+ *
+ * @param <T> class extends AbsItems (either lost or found)
+ */
 public class DataFetcher<T extends AbsItem> implements IDataFetcher {
     public interface OnDataFetchedListener {
         /**
