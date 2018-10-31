@@ -75,8 +75,8 @@ public class Tab3Fragment extends Fragment {
 //        Bitmap item = BitmapFactory.decodeResource(getResources(),
 //                R.drawable.ic_passport);
 //
-//        String name = "Ishay Muchtar", description = "Found this passport near the Town Hall!";
-//        Found found = new Found(profile, badge, item, map, name, description);
+//        String name = "Ishay Muchtar", description = "AdapterFound this passport near the Town Hall!";
+//        AdapterFound found = new AdapterFound(profile, badge, item, map, name, description);
 //
 //        mLstFounds.add(found);
 

@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
+public class BackgroundWorker extends AsyncTask<Integer, AdapterFound, List<AdapterFound>> {
     private static final String TAG = "BackgroundWorker";
 
     public interface OnDataFetchedListener {
@@ -21,7 +21,7 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
          * @param founds       ArrayList of Founds, with new data
          * @param changedOldestFoundId the new oldest post ID
          */
-        void onDataFetched(final List<Found> founds, String changedOldestFoundId);
+        void onDataFetched(final List<AdapterFound> founds, String changedOldestFoundId);
     }
 
     private OnDataFetchedListener listener;
@@ -35,9 +35,9 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
     }
 
     @Override
-    protected List<Found> doInBackground(Integer... integers) {
+    protected List<AdapterFound> doInBackground(Integer... integers) {
         Log.d(TAG, "doInBackground: starting database fetching");
-        final List<Found> lst = new ArrayList<>();
+        final List<AdapterFound> lst = new ArrayList<>();
 
         // fetching from database
         try {
@@ -46,7 +46,7 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot :
                             dataSnapshot.getChildren()) {
-                        Found found = snapshot.getValue(Found.class);
+                        AdapterFound found = snapshot.getValue(AdapterFound.class);
                         lst.add(found);
 
                         // save the new oldest retrieved found id
@@ -72,9 +72,9 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
     }
 
     @Override
-    protected void onPostExecute(List<Found> founds) {
+    protected void onPostExecute(List<AdapterFound> founds) {
         listener.onDataFetched(founds, mOldestPostId);
-//        ArrayList<Found> mLst = adapter.lstFounds;
+//        ArrayList<AdapterFound> mLst = adapter.lstFounds;
 //        int size = mLst.size();
 //
 //        mLst.remove(size - 1);
@@ -87,8 +87,8 @@ public class BackgroundWorker extends AsyncTask<Integer, Found, List<Found>> {
 ////            Bitmap item = BitmapFactory.decodeResource(getResources(),
 ////                    R.drawable.ic_passport);
 ////
-////            String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-////            Found found2 = new Found(profile, badge, item, map, name, description);
+////            String name = "Ishay Cena", description = "AdapterFound this passport near the Town Hall...";
+////            AdapterFound found2 = new AdapterFound(profile, badge, item, map, name, description);
 //
 ////            adapter.addItem(found2);
 //        adapter.notifyItemRangeChanged(size - 1, mLst.size() - size);

@@ -97,7 +97,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         Bundle locationBundle = getArguments();
         CustomLatLong latLong = (CustomLatLong) locationBundle.getSerializable("LOCATION");
         moveCamera(new LatLng(latLong.lat,
-                latLong.lng), DEFAULT_ZOOM_LEVEL, "Found Location");
+                latLong.lng), DEFAULT_ZOOM_LEVEL, "AdapterFound Location");
 
 
         // set marker on my location

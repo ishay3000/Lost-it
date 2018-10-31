@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.example.ishaycena.tabfragments.R;
 import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
-import com.example.ishaycena.tabfragments.Utilities.AbsItem;
-import com.example.ishaycena.tabfragments.Utilities.Found;
+import com.example.ishaycena.tabfragments.Utilities.AbsLostFound;
+import com.example.ishaycena.tabfragments.Utilities.AdapterFound;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDataFetchedListener,*/
-        /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.Found>*/
+        /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.AdapterFound>*/
         /*FoundFetcher.OnDataFetchedListener, */com.example.ishaycena.tabfragments.FoundService.DataFetcher.OnDataFetchedListener {
     private static final String TAG = "FoundsFragment";
     View view;
@@ -44,7 +44,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
 
 
     // vars
-    private ArrayList<Found> lstFounds = new ArrayList<>();
+    private ArrayList<AdapterFound> lstFounds = new ArrayList<>();
     private RecyclerViewAdapter adapter;
 
 
@@ -87,8 +87,8 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
             Bitmap item = BitmapFactory.decodeResource(getResources(),
                     R.drawable.ic_passport);
 
-            String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-            final Found found2 = new Found(profile, badge, item, map, name, description);
+            String name = "Ishay Cena", description = "AdapterFound this passport near the Town Hall...";
+            final AdapterFound found2 = new AdapterFound(profile, badge, item, map, name, description);
             found2.setCustomLatLong(new CustomLatLong(32.084041, 34.887761999999995));
 
             new Handler().post(new Runnable() {
@@ -146,7 +146,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
 
     //#region old found fetcher
 /*    @Override
-    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.Found> founds, String changedOldestFoundId) {
+    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.AdapterFound> founds, String changedOldestFoundId) {
         Log.d(TAG, "onDataFetched: fetched founds");
 
         oldestFoundId = changedOldestFoundId;
@@ -174,7 +174,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
 //#endregion
 
     @Override
-    public synchronized void onDataFetched(final List<? extends AbsItem> data, String changedOldestDataId) {
+    public synchronized void onDataFetched(final List<? extends AbsLostFound> data, String changedOldestDataId) {
         Log.d(TAG, "onDataFetched: fetched founds");
 
         oldestFoundId = changedOldestDataId;
@@ -259,7 +259,7 @@ public class FoundsFragment extends Fragment implements /*BackgroundWorker.OnDat
                 new FoundFetcher(FoundsFragment.this, mDatabaseReference, oldestFoundId).FetchData();*/
 
 /*                new FetchWorker<>(FoundsFragment.this,
-                        com.example.ishaycena.tabfragments.FoundService.Found.class,
+                        com.example.ishaycena.tabfragments.FoundService.AdapterFound.class,
                         mDatabaseReference,
                         oldestFoundId).execute();*/
 //#endregion

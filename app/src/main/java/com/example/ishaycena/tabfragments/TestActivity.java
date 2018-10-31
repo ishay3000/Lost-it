@@ -2,12 +2,12 @@ package com.example.ishaycena.tabfragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.ishaycena.tabfragments.Utilities.Found;
+import com.example.ishaycena.tabfragments.Utilities.AdapterFound;
 import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TestActivity extends AppCompatActivity {
 
     // vars
     RecyclerViewAdapter adapter;
-    ArrayList<Found> lstFounds = new ArrayList<>();
+    ArrayList<AdapterFound> lstFounds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,8 @@ public class TestActivity extends AppCompatActivity {
         Bitmap item = BitmapFactory.decodeResource(getResources(),
                 R.drawable.ic_passport);
 
-        String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-        Found found = new Found(profile, badge, item, map, name, description);
+        String name = "Ishay Cena", description = "AdapterFound this passport near the Town Hall...";
+        AdapterFound found = new AdapterFound(profile, badge, item, map, name, description);
 
         adapter.addItem(found);
     }

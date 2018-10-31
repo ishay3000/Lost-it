@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ishaycena.tabfragments.LostService.Lost;
 import com.example.ishaycena.tabfragments.R;
 import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
-import com.example.ishaycena.tabfragments.Utilities.AbsItem;
-import com.example.ishaycena.tabfragments.Utilities.Found;
-import com.example.ishaycena.tabfragments.Utilities.RecyclerViewAdapter;
+import com.example.ishaycena.tabfragments.Utilities.AbsLostFound;
+import com.example.ishaycena.tabfragments.Utilities.AdapterFound;
+import com.example.ishaycena.tabfragments.Utilities.AdapterLost;
+import com.example.ishaycena.tabfragments.Utilities.LostRecyclerViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataFetchedListener,*/
-        /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.Found>*/
+        /*FetchWorker.OnDataFetchedListener<com.example.ishaycena.tabfragments.FoundService.AdapterFound>*/
         /*FoundFetcher.OnDataFetchedListener, */com.example.ishaycena.tabfragments.FoundService.DataFetcher.OnDataFetchedListener {
     private static final String TAG = "LostFragment";
     View view;
@@ -44,8 +46,8 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
 
 
     // vars
-    private ArrayList<Found> lstFounds = new ArrayList<>();
-    private RecyclerViewAdapter adapter;
+    private ArrayList<AdapterLost> lstFounds = new ArrayList<>();
+    private LostRecyclerViewAdapter adapter;
 
 
     // recycler view vars
@@ -87,11 +89,11 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
             Bitmap item = BitmapFactory.decodeResource(getResources(),
                     R.drawable.ic_passport);
 
-            String name = "Ishay Cena", description = "Found this passport near the Town Hall...";
-            final Found found2 = new Found(profile, badge, item, map, name, description);
+            String name = "Ishay Cena", description = "AdapterFound this passport near the Town Hall...";
+            final AdapterFound found2 = new AdapterFound(profile, badge, item, map, name, description);
             found2.setCustomLatLong(new CustomLatLong(32.084041, 34.887761999999995));
 
-            new Handler().post(new Runnable() {
+/*            new Handler().post(new Runnable() {
                 @Override
                 public void run() {
                     for (int i = 0; i < 1; i++) {
@@ -99,7 +101,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
                         adapter.notifyDataSetChanged();
                     }
                 }
-            });
+            });*/
 
         }
 
@@ -130,7 +132,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
 
             //new FoundFetcher(FoundsFragment.this, mDatabaseReference, oldestFoundId).FetchData();
             new com.example.ishaycena.tabfragments.FoundService.DataFetcher<>(LostFragment.this,
-                    com.example.ishaycena.tabfragments.FoundService.Found.class,
+                    Lost.class,
                     mDatabaseReference,
                     oldestFoundId).FetchData();
         }
@@ -146,7 +148,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
 
     //#region old found fetcher
 /*    @Override
-    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.Found> founds, String changedOldestFoundId) {
+    public void onDataFetched(final List<com.example.ishaycena.tabfragments.FoundService.AdapterFound> founds, String changedOldestFoundId) {
         Log.d(TAG, "onDataFetched: fetched founds");
 
         oldestFoundId = changedOldestFoundId;
@@ -174,7 +176,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
 //#endregion
 
     @Override
-    public synchronized void onDataFetched(final List<? extends AbsItem> data, String changedOldestDataId) {
+    public synchronized void onDataFetched(final List<? extends AbsLostFound> data, String changedOldestDataId) {
         Log.d(TAG, "onDataFetched: fetched lost");
 
         oldestFoundId = changedOldestDataId;
@@ -186,14 +188,14 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
                 int size = data.size();
 
                 // remove progress bar (last item in the adapter)
-                adapter.mLstFounds.remove(adapter.mLstFounds.size() - 1);
+                adapter.mLstData.remove(adapter.mLstData.size() - 1);
                 adapter.notifyItemRemoved(size - 1);
-                adapter.notifyItemRangeChanged(size - 1, adapter.mLstFounds.size() - size);
+                adapter.notifyItemRangeChanged(size - 1, adapter.mLstData.size() - size);
 
 
                 if (data.size() > 0) {
                     // add the items
-                    List<com.example.ishaycena.tabfragments.FoundService.Found> lstFounds = (List<com.example.ishaycena.tabfragments.FoundService.Found>) data;
+                    List<Lost> lstFounds = (List<Lost>) data;
                     adapter.addFetchedItem(lstFounds);
                     adapter.notifyDataSetChanged();
                 }
@@ -259,7 +261,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
                 new FoundFetcher(FoundsFragment.this, mDatabaseReference, oldestFoundId).FetchData();*/
 
 /*                new FetchWorker<>(FoundsFragment.this,
-                        com.example.ishaycena.tabfragments.FoundService.Found.class,
+                        com.example.ishaycena.tabfragments.FoundService.AdapterFound.class,
                         mDatabaseReference,
                         oldestFoundId).execute();*/
 //#endregion
@@ -269,7 +271,7 @@ public class LostFragment extends Fragment implements /*BackgroundWorker.OnDataF
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: initRecyclerView");
 
-        adapter = new RecyclerViewAdapter(getContext(), lstFounds);
+        adapter = new LostRecyclerViewAdapter(getContext(), lstFounds); // new RecyclerViewAdapter(getContext(), lstFounds);
         recyclerView.setAdapter(adapter);
 
         mLayoutManager = new LinearLayoutManager(getActivity());

@@ -1,4 +1,4 @@
 package com.example.ishaycena.tabfragments.Utilities;
 
-public abstract class AbsItem {
+public abstract class AbsRecyclerViewAdapterItem {
 }

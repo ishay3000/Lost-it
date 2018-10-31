@@ -2,7 +2,7 @@ package com.example.ishaycena.tabfragments.FoundService;
 
 import android.util.Log;
 
-import com.example.ishaycena.tabfragments.Utilities.AbsItem;
+import com.example.ishaycena.tabfragments.Utilities.AbsLostFound;
 import com.example.ishaycena.tabfragments.Utilities.IDataFetcher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @param <T> class extends AbsItems (either lost or found)
  */
-public class DataFetcher<T extends AbsItem> implements IDataFetcher {
+public class DataFetcher<T extends AbsLostFound> implements IDataFetcher {
     public interface OnDataFetchedListener {
         /**
          * triggers when data is fetched from the database
@@ -25,7 +25,7 @@ public class DataFetcher<T extends AbsItem> implements IDataFetcher {
          * @param data                ArrayList of data, with new data
          * @param changedOldestDataId the new oldest post ID
          */
-        void onDataFetched(final List<? extends AbsItem> data, String changedOldestDataId);
+        void onDataFetched(final List<? extends AbsLostFound> data, String changedOldestDataId);
     }
 
     //#region vars

@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new LostFragment(), "Lost");
-        adapter.addFragment(new FoundsFragment(), "Found");
+        adapter.addFragment(new FoundsFragment(), "AdapterFound");
         adapter.addFragment(new Tab3Fragment(), "HighScores");
         // TODO add fragments for bottom nav view
 //        adapter.addFragment(new NavProfileFragment(), "Profile");

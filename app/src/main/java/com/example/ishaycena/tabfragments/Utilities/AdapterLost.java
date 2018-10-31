@@ -6,12 +6,12 @@ import com.example.ishaycena.tabfragments.SignupService.CustomLatLong;
 
 import java.io.Serializable;
 
-public class Found implements Serializable {
+public class AdapterLost extends AbsRecyclerViewAdapterItem implements Serializable {
     private Bitmap imgProfileUrl, imgBadgeUrl, imgItem, imgMap;
     private String personName, description;
     private CustomLatLong customLatLong;
 
-    public Found(Bitmap imgProfileUrl, Bitmap imgBadgeUrl, Bitmap imgItem, Bitmap imgMap, String personName, String description) {
+    public AdapterLost(Bitmap imgProfileUrl, Bitmap imgBadgeUrl, Bitmap imgItem, Bitmap imgMap, String personName, String description) {
         this.imgProfileUrl = imgProfileUrl;
         this.imgBadgeUrl = imgBadgeUrl;
         this.imgItem = imgItem;
@@ -20,12 +20,12 @@ public class Found implements Serializable {
         this.description = description;
     }
 
-    public Found() {
+    public AdapterLost() {
     }
 
     @Override
     public String toString() {
-        return "Found{" +
+        return "AdapterFound{" +
                 "personName='" + personName + '\'' +
                 ", description='" + description + '\'' +
                 '}';
